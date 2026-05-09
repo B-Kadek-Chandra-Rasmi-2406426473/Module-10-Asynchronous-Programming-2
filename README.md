@@ -53,6 +53,8 @@ Perbedaan utama adalah format pesan:
 - Tutorial 3 menggunakan JSON dengan format:
   `{"messageType":"...","dataArray":[...],"data":"..."}`
 
+![alt text](image.png)
+
 Modifikasi yang dilakukan pada server.rs:
 1. Menambahkan struct WebSocketMessage untuk parse/serialize JSON
 2. Menambahkan UserList (Arc<Mutex<Vec<String>>>) untuk menyimpan daftar user yang terhubung
