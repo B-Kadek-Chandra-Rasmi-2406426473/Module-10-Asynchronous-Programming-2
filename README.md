@@ -43,3 +43,28 @@ clients
 ![client-3-1](client-3-2.png)
 
 ![client-3-3](client-3-3.png)
+
+
+### Bonus: Rust Websocket server for YewChat!
+
+Server dari Tutorial 2 dimodifikasi untuk bisa melayani YewChat dari Tutorial 3.
+Perbedaan utama adalah format pesan:
+- Tutorial 2 menggunakan plain text
+- Tutorial 3 menggunakan JSON dengan format:
+  `{"messageType":"...","dataArray":[...],"data":"..."}`
+
+Modifikasi yang dilakukan pada server.rs:
+1. Menambahkan struct WebSocketMessage untuk parse/serialize JSON
+2. Menambahkan UserList (Arc<Mutex<Vec<String>>>) untuk menyimpan daftar user yang terhubung
+3. Menambahkan handler untuk messageType "register". Menyimpan username dan broadcast user list terbaru
+4. Menambahkan handler untuk messageType "message". Membungkus pesan dengan format JSON yang diexpect oleh YewChat client
+5. Menambahkan cleanup saat client disconnect
+
+YewChat mengirim semua pesan sebagai satu string JSON melalui WebSocket. Meskipun formatnya JSON, tetap dikirim sebagai text message biasa di level WebSocket protocol. Jadi server Rust cukup parse string tersebut sebagai JSON menggunakan serde_json, proses sesuai messageType-nya, lalu broadcast kembali dalam format JSON yang dimengerti client.
+
+`Q: which one you prefer, the javascript version or the Rust version`
+Saya prefer versi Rust karena:
+1. Type safety, serde memastikan struktur JSON selalu valid
+2. Performance Rust lebih efisien dalam memory dan CPU
+3. Konsistensi frontend dan backend sama-sama menggunakan Rust
+Namun versi JavaScript terlihat lebih mudah dan lebih familiar. 
