@@ -29,3 +29,17 @@ clients
 
 ![client-2-3](client-2-3.png)
 
+
+### Experiment 2.3: Small changes, add IP and Port
+Perubahan dilakukan di `server.rs` pada fungsi `handle_connectio`n`. Sebelumnya pesan di-broadcast apa adanya. Sekarang pesan dibungkus dengan format!("{addr}: {text}") sehingga menyertakan IP dan port pengirim. Ini membantu client mengetahui siapa yang mengirim pesan, karena setiap koneksi TCP memiliki port unik yang mengidentifikasi masing-masing client.
+
+Screenshots:
+server
+![server-3](server-3.png)
+
+clients
+![client-3-1](client-3-1.png)
+
+![client-3-1](client-3-2.png)
+
+![client-3-3](client-3-3.png)

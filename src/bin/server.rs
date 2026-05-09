@@ -24,7 +24,9 @@ async fn handle_connection(
                     Some(Ok(msg)) => {
                         if let Some(text) = msg.as_text() {
                             println!("From client {addr:?} \"{text}\"");
-                            bcast_tx.send(text.to_string()).unwrap();
+                            // Sertakan info IP dan Port pengirim dalam pesan broadcast
+                            let msg_with_info = format!("{addr}: {text}");
+                            bcast_tx.send(msg_with_info).unwrap();
                         }
                     }
                     _ => {
